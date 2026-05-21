@@ -1,0 +1,167 @@
+//task-4
+
+import java.util.Arrays;
+public class task4{
+  public static void main(String []args){
+    int m =4;
+    Integer [] tasks={2, 4, 7, 1, 6};
+    System.out.println(Arrays.toString(process(m,tasks)));
+      
+  }
+  public static int [] process(int m,Integer[] tasks){
+    MinHeap hp =new MinHeap(m);
+    int arr[]=new int[m];
+    for(int i=0;i<m;i++){
+      hp.insert(0);
+    }
+    for(int i=0;i<tasks.length;i++){
+      int n=hp.extractMin()+tasks[i];
+      hp.insert(n);
+    }
+    for(int i=0;i<m;i++){
+      arr[i]=hp.extractMin();
+    }
+    return arr;
+  }
+}
+
+
+//Task-5
+
+import java.util.Arrays;
+public class task5{
+  public static void main(String []args){
+    int m =3;
+    Integer [] tasks={4, 10, 2, 8, 6, 7};
+    System.out.println(Arrays.toString(process(m,tasks)));
+      
+  }
+  public static int [] process(int m,Integer[] tasks){
+    MaxHeap hp =new MaxHeap(tasks.length);
+    int arr[]=new int [m];
+    for(int i=0;i<tasks.length;i++){
+      hp.insert(tasks[i]);
+    }
+    for(int i=0;i<m;i++){
+      arr[i]=hp.extractMax();
+    }
+    return arr;
+  }
+}
+
+
+
+
+
+
+//Task-6
+
+public class pr{
+  String name="";
+  int priority =0;
+  
+  public pr(String s,int n){
+    name=s;
+    priority=n;
+  }
+}
+
+
+
+public class NewMaxHeap {
+
+    private pr[] heap;
+    private int size;
+    private int capacity;
+
+    public NewMaxHeap(int capacity) {
+        this.capacity = capacity;
+        this.heap = new pr[capacity];
+        this.size = 0;
+    }
+    public void insert(pr value) {
+      if(size==capacity){
+        return;
+      }
+       heap[size]=value;
+       heapifyUp(size);
+       size++;
+    }
+
+    public pr extract() {
+      if(isEmpty()){
+      return null;}
+        pr max=heap[0];
+        heap[0]=heap[size-1];
+       heap[size - 1] = null;
+       size--;
+        heapifyDown(0);
+        return max;
+    }
+    private void heapifyUp(int index) {
+      while(index>0){
+      int parent_index =(index-1)/2;
+      if(heap[parent_index].priority>=heap[index].priority){
+      break;
+      }
+      
+      pr temp=heap[parent_index];
+      heap[parent_index]=heap[index];
+      heap[index]=temp;
+      index=parent_index;
+      }
+    }
+    private void heapifyDown(int index) {
+      while(index<size){
+        int left=2*index+1;
+        int right=2*index+2;
+        
+        int big =index;
+        if(left<size && heap[left].priority>heap[big].priority){
+          big=left;
+        }
+        if(right<size && heap[right].priority>heap[big].priority){
+          big=right;
+        }
+        if(big==index){
+          break;
+        }
+        pr temp=heap[big];
+        heap[big]=heap[index];
+        heap[index]=temp;
+        index = big;
+      }
+    }
+    public boolean isEmpty(){
+      if(size==0){
+      return true;
+      }
+      else{
+      return false;
+      }
+    }
+}
+
+
+
+
+import java.util.Arrays;
+public class task6{
+  public static void main(String []args){
+    String [] task_names={"Email", "Meeting", "Code Review", "Lunch", "Debug"};
+    Integer [] priorities={2, 5, 3, 1, 4};
+    System.out.println(Arrays.toString(process(task_names,priorities)));
+  }
+  public static String [] process(String [] arr,Integer [] priority){
+    NewMaxHeap hp=new NewMaxHeap(arr.length);
+    for(int i=0;i<arr.length;i++){
+      hp.insert( new pr(arr[i],priority[i]));
+    }
+    for(int i=0;i<arr.length;i++){
+      arr[i]= hp.extract().name;
+    }
+    return arr;
+      
+  }
+  
+  }

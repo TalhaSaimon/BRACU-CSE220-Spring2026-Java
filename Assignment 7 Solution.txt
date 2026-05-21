@@ -1,0 +1,279 @@
+//Task 2: [Assignment Task]
+//Adjacency Matrix-2a
+public class matrix {
+    public static void main(String[] args) {
+        int vtx =8;
+        int [][] adjmat=new int[vtx+1][vtx+1];
+        addtomat(1,2,4,adjmat,"undirected");
+        addtomat(1,4,5,adjmat,"undirected");
+        addtomat(1,6,6,adjmat,"undirected");
+        addtomat(1,8,1,adjmat,"directed");
+        addtomat(4,2,8,adjmat,"directed");
+        addtomat(8,2,1,adjmat,"directed");
+        addtomat(3,2,9,adjmat,"undirected");
+        addtomat(5,4,2,adjmat,"undirected");
+        addtomat(2,6,3,adjmat,"undirected");
+        addtomat(7,8,16,adjmat,"directed");
+        addtomat(7,2,1,adjmat,"directed");
+        addtomat(8,1,9,adjmat,"directed");
+        System.out.println("Max Vertex = "+max_vtx(adjmat));
+    }
+    public static void addtomat(int idx1,int idx2,int weight,int[][] adj,String type){
+      adj[idx1][idx2]=weight;
+      if(type.equals("undirected")){
+        adj[idx2][idx1]=weight;
+      }
+    }
+    public static int max_vtx(int [][] arr){
+      int max=0;
+      int vtx=0;
+      for(int i=1;i<arr.length;i++){
+        int sum=0;
+        for(int j=0;j<arr.length;j++){
+          if(arr[i][j]!=0){
+            sum +=arr[i][j];
+          }
+        }
+        if(sum>max){
+          max=sum;
+          vtx=i;
+        }
+      }
+      return vtx;
+    }
+    
+}
+
+//Adjacency List (Task2b)
+
+      public static int max_vtx(EdgeNode[] arr){
+      int max=0;
+      int vtx=0;
+      for(int i=0;i<arr.length;i++){
+        EdgeNode head=arr[i];
+        int sum=0;
+        while(head!=null){
+          sum +=head.weight;
+          head=head.next;
+        }
+        if(sum>max){
+          max=sum;
+          vtx=i;
+        }
+      }
+      return vtx;
+    }
+
+
+//Task 3: [Assignment Task]
+//Adjacency Matrix-3a
+public class m {
+    public static void main(String[] args) {
+        int vtx =8;
+        int [][] adjmat=new int[vtx+1][vtx+1];
+        addtomat(1,2,4,adjmat);
+        addtomat(1,4,5,adjmat);
+        addtomat(1,6,6,adjmat);
+        addtomat(1,8,1,adjmat);
+        addtomat(4,2,8,adjmat);
+        addtomat(8,2,1,adjmat);
+        addtomat(3,2,9,adjmat);
+        addtomat(5,4,2,adjmat);
+        addtomat(2,6,3,adjmat);
+        addtomat(7,8,16,adjmat);
+        addtomat(7,2,1,adjmat);
+        addtomat(8,1,9,adjmat);
+        print(adjmat);
+        System.out.println(highdegree(adjmat));
+        System.out.println("Max Vertex = "+max_vtx(adjmat));
+    }
+    public static void addtomat(int idx1,int idx2,int weight,int[][] adj){
+      adj[idx1][idx2]=weight;
+    }
+    public static void print(int [][] arr){
+      for(int i=0;i<arr.length;i++){
+        System.out.print("[");
+        for(int j=0;j<arr.length;j++){
+          System.out.print(arr[i][j]+" ");
+        }
+        System.out.println("]");
+      }
+    }
+    public static int highdegree(int [][]arr){
+      int max=0;
+      for(int i=0;i<arr.length;i++){
+        int sum=0;
+        for(int j=0;j<arr.length;j++){
+          if(arr[i][j]!=0){
+            sum++;
+          }
+        }
+        if(sum>max){
+          max=sum;}
+      }
+      return max;
+    }
+   public static int max_vtx(int [][] arr){
+      int max=0;
+      int vtx=0;
+      for(int i=1;i<arr.length;i++){
+        int sum=0;
+        for(int j=0;j<arr.length;j++){
+          if(arr[i][j]!=0){
+            sum +=arr[i][j];
+          }
+        }
+        if(sum>max){
+          max=sum;
+          vtx=i;
+        }
+      }
+      return vtx;
+    }
+    
+}
+
+
+//Adjacency List (Task3b)
+public class tester{
+    public static void main(String[] args) {
+        int v = 5;
+        node[] adjList = new node[v]; 
+        
+        task.addnode(adjList, 0, 1, 2);
+        task.addnode(adjList, 0, 3, 6);
+        task.addnode(adjList, 2, 3, 1);
+        task.addnode(adjList, 2, 4, 4);
+        System.out.println("Adjacency List Representation:");
+        task.showAdjList(adjList);
+        System.out.println("Max Degree = "+task.maxdegree(adjList));
+        System.out.println("Max Vertex = "+task.max_vtx(adjList));
+    }
+
+}
+
+public class node {
+    int vtx;
+    int wgt;
+    node next;
+
+    public node(int n1, int n2) {
+        vtx = n1;
+        wgt = n2;
+        next = null;
+    }
+}
+
+
+public class task{
+  
+  
+  
+  public static void addnode(node[] arr,int from,int to,int wgt){
+    node n=new node (to,wgt);
+    if(arr[from]==null){
+      arr[from]=n;
+    }
+    else{
+      node head=arr[from];
+      while(head.next!=null){
+        head=head.next;
+      }
+      head.next=n;
+    }
+  }
+      public static void print(node head) {
+        node n = head;
+        while (n!=null) {
+            System.out.print("  " + n.vtx + "," + n.wgt + "  ");
+            n = n.next;
+        }
+        System.out.println();
+    }
+          public static void showAdjList(node[] adjList) {
+        for (int i = 0; i < adjList.length; i++) {
+            System.out.print("Vertex " + i + ":");
+            print(adjList[i]);
+        }
+    }
+      public static int maxdegree(node[] arr){
+      int max =0;
+      for (int i=0;i< arr.length; i++) {
+        node head=arr[i];
+        int sum=0;
+        while(head!=null){
+          sum++;
+          head=head.next;
+        }
+        if(max<sum){
+          max=sum;
+        }
+      }
+      return max;
+    }
+      public static int max_vtx(node[] arr){
+      int max=0;
+      int vtx=0;
+      for(int i=0;i<arr.length;i++){
+        node head=arr[i];
+        int sum=0;
+        while(head!=null){
+          sum +=head.wgt;
+          head=head.next;
+        }
+        if(sum>max){
+          max=sum;
+          vtx=i;
+        }
+      }
+      return vtx;
+    }
+}
+
+
+//Task 4: [Assignment Task]
+//Adjacency Matrix-4a
+
+public class m {
+    public static void main(String[] args) {
+        int vtx =8;
+        int [][] adjmat=new int[vtx+1][vtx+1];
+        addtomat(1,2,4,adjmat);
+        addtomat(1,4,5,adjmat);
+        addtomat(1,6,6,adjmat);
+        addtomat(1,8,1,adjmat);
+        addtomat(4,2,8,adjmat);
+        addtomat(8,2,1,adjmat);
+        addtomat(3,2,9,adjmat);
+        addtomat(5,4,2,adjmat);
+        addtomat(2,6,3,adjmat);
+        addtomat(7,8,16,adjmat);
+        addtomat(7,2,1,adjmat);
+        addtomat(8,1,9,adjmat);
+        print(adjmat);
+        convert(adjmat);
+        print(adjmat);
+    }
+    public static void addtomat(int idx1,int idx2,int weight,int[][] adj){
+      adj[idx1][idx2]=weight;
+    }
+    public static void convert(int [][] arr){
+      for(int i=0;i<arr.length;i++){
+        for(int j=i+1;j<arr.length;j++){
+            int sum =arr[i][j]+arr[j][i];
+            arr[i][j] = sum;
+            arr[j][i]=sum;
+          }
+        }
+      }
+    public static void print(int [][] arr){
+      for(int i=0;i<arr.length;i++){
+        System.out.print("[");
+        for(int j=0;j<arr.length;j++){
+          System.out.print(arr[i][j]+" ");
+        }
+        System.out.println("]");
+      }
+      System.out.println();
+    } 
+}

@@ -1,0 +1,160 @@
+//Hashtable: Deletion Operation 
+
+    private int hashFunction( Integer key ){
+
+        return ((int)key + 3) % 6;
+    }
+    
+    public void remove( Integer key ){
+        int idx =hashFunction(key);
+        PairNode curr= ht[idx];
+        if(curr==null){
+        }
+        else if(curr.key==key){
+          ht[idx]=ht[idx].next;
+        }
+        else{
+          while(curr.next!=null){
+            if(curr.next.key==key){
+            curr.next=curr.next.next;
+          }
+            else{
+          curr=curr.next;
+            }
+          }
+    }
+    }
+
+// Searching in hashtable
+
+    private int hashFunction( String key ){
+        int len =key.length();
+        if(len%2 !=0){
+          key +="N";
+        }
+        len =key.length();
+        int sum=0;
+        for(int i=0;i<len;i+=2){
+          int n1 =(int)key.charAt(i);
+          int n2 =(int)key.charAt(i+1);
+          String s =Integer.toString(n1)+Integer.toString(n2);
+          sum +=Integer.parseInt(s);
+        }
+        return sum%ht.length;
+    }
+    public String searchHashtable( Object[] keyValuePair ){
+        int idx=hashFunction((String)keyValuePair[0]);
+        PairNode curr=ht[idx];
+        while(curr!=null){
+          if(curr.key.equals((String)keyValuePair[0])){
+            return "Found";
+          }
+          curr=curr.next;
+        }
+        return "Not Found"; 
+    }
+
+//Stack: Conditional Reverse
+
+    public static Stack conditionalReverse(Stack stack) {
+      if(stack.isEmpty()){
+        return stack;
+      }
+      else{
+        Stack s =new Stack();
+        s.push(stack.pop());
+        while(stack.isEmpty()!= true){
+          int n1=stack.peek();
+          int n2=s.peek();
+          if(n1==n2){
+            stack.pop();
+          }
+          else{
+            s.push(stack.pop());
+          }
+        }
+        return s;
+      }
+    }
+//Queue: Hot Potato Game
+
+    public static String hotPotato(String[] players, int k) {
+        LinkedListQueue q1= new LinkedListQueue();
+        int len =players.length;
+        for(int i=0;i<len;i++){
+          q1.enqueue(players[i]);
+        }
+        for(int i=0;i<len-1;i++){
+          for(int j=0;j<k;j++){
+            q1.enqueue(q1.dequeue());
+          }
+          
+          System.out.println(q1.dequeue()+" eliminated");
+        }
+          
+          
+        return (String)q1.peek();
+    }
+
+//Dancing Pairs
+
+    public static void dance_pair(Stack stk) {
+        Queue maleQueue =new Queue();
+        Queue femaleQueue=new Queue();
+        int i=1;
+        while(!stk.isEmpty()){
+          Dancer d = (Dancer)stk.pop();
+          if(d.getGender()=='F'){
+            if(!stk.isEmpty() &&((Dancer)stk.peek()).getGender()=='M'){
+               System.out.println("#"+i+": "+d.toString()+" & "+stk.pop().toString());
+               i++;
+               
+            }
+            else if(!maleQueue.isEmpty()){
+              System.out.println("#"+i+": "+d.toString()+" & "+maleQueue.dequeue().toString());
+              i++;
+            }
+            else{
+              femaleQueue.enqueue(d);
+            }
+            
+          }
+          else{
+            if(!stk.isEmpty() &&((Dancer)stk.peek()).getGender()=='F'){
+               System.out.println("#"+i+": "+d.toString()+" & "+stk.pop().toString());
+               i++;
+            }
+            else if(!femaleQueue.isEmpty()){
+              System.out.println("#"+i+": "+d.toString()+" & "+femaleQueue.dequeue().toString());
+              i++;
+            }
+            else{
+              maleQueue.enqueue(d);
+            }
+          }
+          
+        }
+        boolean val=false;
+        if(!femaleQueue.isEmpty()){
+          System.out.println("Unpaired Female:");
+          while(!femaleQueue.isEmpty()){
+            if(val){
+              System.out.print(", ");
+            }
+            System.out.print(femaleQueue.dequeue());
+            val=true;
+          }
+        }
+        if(!maleQueue.isEmpty()){
+          val =false;
+          System.out.println("Unpaired male:");
+          while(!maleQueue.isEmpty()){
+          if(val){
+              System.out.print(", ");
+            }
+          System.out.print(maleQueue.dequeue());
+          val=true;
+          }
+            
+        }
+    }

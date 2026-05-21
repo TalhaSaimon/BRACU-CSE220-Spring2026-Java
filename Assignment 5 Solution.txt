@@ -1,0 +1,125 @@
+// Subtraction of Nodes
+    public static Integer subtractSummation( BTNode root ){
+        Integer lsum=sum(root.left);
+        Integer rsum=sum(root.right);
+        return lsum-rsum;
+    }
+    private static Integer sum(BTNode root ){
+      if(root==null){
+        return 0;}
+      Integer sum=(Integer)root.elem;
+      sum += sum(root.left);
+      sum += sum(root.right);
+      return sum;
+    }
+
+
+// Difference of Level Sum
+
+    public static Integer levelSum( BTNode root ){
+        return oddsum(root,0)-evensum(root,0); 
+    }
+    private static Integer evensum(BTNode root, int n){
+      if(root==null){
+        return 0;
+      }
+      Integer even_sum=0;
+      even_sum += evensum(root.left,n+1);
+      even_sum += evensum(root.right,n+1);
+      if(n%2 == 0){
+        even_sum +=(Integer)root.elem;
+      }
+      return even_sum;
+    }
+    private static Integer oddsum(BTNode root, int n){
+      if(root==null){
+        return 0;
+      }
+      Integer odd_sum=0;
+      odd_sum += oddsum(root.left,n+1);
+      odd_sum += oddsum(root.right,n+1);
+      if(n%2 != 0){
+        odd_sum +=(Integer)root.elem;
+      }
+      return odd_sum;
+    }
+
+
+// Swap Children Nodes
+
+    public static void swapChild( BTNode root, int lvl, int M ){
+      if(root==null){
+        return;
+      }
+        swapChild(root.left,lvl+1,M);
+        swapChild(root.right,lvl+1,M);
+        if(lvl<M){
+          BTNode n=root.left;
+          root.left=root.right;
+          root.right=n;
+        }
+        
+    }
+
+
+// Sum of range
+
+    public static Integer rangeSum( BSTNode root, Integer low, Integer high){
+      if(root==null){
+        return 0;
+      }
+      Integer sum=0;
+      sum +=rangeSum(root.left,low,high);
+      sum +=rangeSum(root.right,low,high);
+      if(root.elem>=low && root.elem <=high){
+        sum+= root.elem;
+      }
+      return sum;
+    }
+
+
+// Mirror Sum of a BST
+
+    public static Integer mirrorSum( BSTNode root ){
+        return helper(root.left,root.right);
+    }
+    private static Integer helper(BSTNode root1, BSTNode root2){
+      Integer sum =0;
+      if(root1 ==null || root2 == null){
+        return 0;
+      } 
+
+      sum += helper(root1.left,root2.right);
+      sum += helper(root1.right,root2.left);
+      sum += root1.elem+root2.elem;
+      return sum;
+    }
+
+
+// Check BST
+
+       public static Boolean isBST( BSTNode root ){
+     return helper(root,Integer.MIN_VALUE,Integer.MAX_VALUE);
+    }
+
+    private static boolean helper(BSTNode root, Integer min,Integer max){
+      if(root==null){
+        return true;
+      }
+      if(root.elem<=min || root.elem>=max){
+        return false;
+      }
+      boolean val;
+      val = helper(root.left,min,root.elem);
+      if(!val){
+      return false;}
+      val = helper(root.right,root.elem,max);
+      return val;
+    }
+
+
+
+
+
+
+
